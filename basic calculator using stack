@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int>st;
+        int sign=1;long long num=0,result=0;
+//thinking is 2+(30-5) mai prev data e.i. 2 aur + ko stack mai store krenge aur (30-5) calculate krenge
+//result is evaluated (30-5)
+//num=30 and num=5
+        for(int i=0;i<s.length();i++){
+            if(isdigit(s[i])){
+                num=num*10+(s[i]-'0');
+            }
+            else if(s[i]=='-'){//num bn gya,result mai add kr do with sign
+                result+=(num)*sign;
+                num=0;sign=-1;
+            }
+            else if(s[i]=='+'){
+                result+=(num)*sign;
+                num=0;sign=1;
+            }
+            else if(s[i]=='('){
+            //jaise hi bracket aya, maine stack mai prev result aur sign add kr diya
+                st.push(result);
+                st.push(sign);
+                result=0;//now new fresh result of whatever is in bracket
+                num=0;
+                sign=1;//assuming postive,agr negative hoga bracket se bahar toh final stack ke sath calculate hone ke baad sahi ayega
+            }
+            else if(s[i]==')'){
+                result+=(num)*sign;
+                //abh mera bracket ka result calculate ho gya hai
+                num=0;
+                sign=1;//assuming
+                int stack_mai_prev_result_ka_sign=st.top();st.pop();
+                int stack_mai_prev_result=st.top();st.pop();
+
+
+                result=stack_mai_prev_result_ka_sign*result+stack_mai_prev_result;
+            }
+            else {
+                continue;
+            }
+        }
+        result+=num*sign;//agr string bracket ke andr na hui toh result toh kabhi last num ko add nahi krega(dry run "1+2")
+        return result;
+    }
+}; 
