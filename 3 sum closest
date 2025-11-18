@@ -1,0 +1,20 @@
+class Solution {
+public:
+ //if i get 3sum of in all possible triplets,and find min(abs(target-sum[i]))-->(N^3)
+ //Questionka faida uthaya: values puchi hai index nhi,so i can SORT->and then apply 2pointer(to find n2 and n3)  (fixing n1)
+    int threeSumClosest(vector<int>& nums, int target) {
+        int n=nums.size();int diff=0;int minsum=-1000000;
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<n-2;i++){
+            int j=i+1,k=n-1;
+            while(j<k){
+                int sum=nums[i]+nums[j]+nums[k];
+                if(abs(target-sum)<abs(target-minsum)){minsum=sum;}
+                //absolute value se negative cases easily handle ho skte h,eg:sum=-1 and 2 hai,target 1 hai-->now i have to again maxmise it
+                if(sum<target) j++;
+                else k--;
+            }
+        }
+        return minsum;
+    }
+};
