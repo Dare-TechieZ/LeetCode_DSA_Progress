@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>>v={};int n=nums.size();
+        //O(n^3)
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<n-2;i++){
+            int j=i+1,k=n-1;
+            while(j<k){
+                if(nums[j]+nums[k]==-1*nums[i]){v.push_back({nums[i],nums[j],nums[k]});j++;k--;}
+                else if(nums[j]+nums[k]>-1*nums[i]) k--;
+                else j++;
+            }
+        }
+        sort(v.begin(), v.end());//vector ko pehle sort krna padega then unique to end erase krnege
+        v.erase(unique(v.begin(), v.end()), v.end());// to remove duplicate from 2d vector
+
+
+/*unique() does not actually erase elements from the container —
+it just reorders elements so that unique elements come first, and returns an iterator pointing to the new logical end of the “unique” range.
+
+To actually remove the duplicates from the container,
+you need to call .erase() with that iterator.*/
+        return v;
+    }
+};
