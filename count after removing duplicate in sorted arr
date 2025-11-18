@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int n=nums.size();//baad mai replace kr dungi
+        vector<int>result(n);
+        auto last_unique=unique(nums.begin(),nums.end());int cnt=0;
+        for(auto it=nums.begin();it!=last_unique;it++){
+            cnt++;
+        }
+        return cnt;
+    }
+};
